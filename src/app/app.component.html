@@ -1,0 +1,43 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<h1>{{title}}</h1>
+<div>
+  <div>
+    <h3>Submit a Cake to be Rated</h3>
+    <div>
+      <p class='text-danger'>{{errorName}}</p>
+      <p class='text-danger'>{{errorImg}}</p>
+      <form (submit)='onNewCake()'>
+        <label>Baker's Name: <input type="text" name='newCake.baker' [(ngModel)]='newCake.baker'></label>
+        <label>Image url: <input type="text" name='newCake.image' [(ngModel)]='newCake.image'></label>
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+  </div>
+  <div>
+    <div *ngFor='let c of cakes'>
+      <!-- make image into a button -->
+      <img (click)='getIdCake(c)' src="{{c.image}}" alt="{{c.image}}" width="200px" height="200px"> 
+      <button (click)="onDeleteClick(c)">Delete</button>
+      <div>
+        <p class='text-danger'>{{errorCom}}</p>
+        <p class='text-danger'>{{errorRat}}</p>
+        <form (submit)="onNewComment(c._id)">
+          <select name="rating" [(ngModel)]="rating[c._id].rating">
+            <option value="5">5 Stars</option>
+            <option value="4">4 Stars</option>
+            <option value="3">3 Stars</option>
+            <option value="2">2 Stars</option>
+            <option value="1">1 Stars</option>
+          </select>
+          <textarea name="comment" [(ngModel)]='rating[c._id].comment' placeholder="Type your comment here" cols="10" rows="5"></textarea>
+          <input type="submit" value="Rate!">
+        </form>
+        <br>
+      </div>
+    </div>
+  </div>
+  <app-cake *ngIf='comp' [cake]=cake></app-cake>
+</div>
+
+  
+<router-outlet></router-outlet>
